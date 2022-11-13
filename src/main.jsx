@@ -19,19 +19,18 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-  },
-]);
-const router2 = createBrowserRouter([
-  {
-    path: "/friend/:id",
-    element: <SecretFriend />,
+    children: [
+      {
+        path: "friend/:id",
+        element: <SecretFriend />,
+      },
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <RouterProvider router={router2} />
     {/* <BrowserRouter>
       <Routes>
         <Router path="/" element={<App />} />
