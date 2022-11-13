@@ -72,7 +72,7 @@ const App = () => {
   };
 
   const handleCopy = (id) => {
-    const Text = `Hello, open this link to see who is your secret friend\n\nhttp://127.0.0.1:5173/friend/${id}`;
+    const Text = `Hello, open this link to see who is your secret friend\n\nhttps://secret-friend-edward.netlify.app/friend/${id}`;
     navigator.clipboard.writeText(Text);
     setClipboard(true);
   };
