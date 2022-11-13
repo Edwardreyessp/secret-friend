@@ -1,12 +1,20 @@
-import { Box, Button, IconButton, TextField } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  IconButton,
+  Snackbar,
+  TextField,
+} from "@material-ui/core";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { useState } from "react";
-import "./App.css";
+import "./App.scss";
+import { writeSecretFriend } from "./firebase/config";
 
 const App = () => {
   const [group, setGroup] = useState([{ name: "", group: "", id: "" }]);
   const [indexName, setIndexName] = useState(0);
   const [showUrls, setShowUrls] = useState(false);
+  const [clipboard, setClipboard] = useState(false);
 
   const handleName = (name, index) => {
     setGroup(
@@ -42,7 +50,7 @@ const App = () => {
 
   const createUrls = () => {
     let asignedUsers = [];
-    let gifts = [];
+    let gifts = {};
     for (let index = 0; index < group.length; index++) {
       let available = group.filter(
         (item) => !item.group.includes(group[index].group)
@@ -50,15 +58,31 @@ const App = () => {
 
       available = available.filter((item) => !asignedUsers.includes(item.name));
       const secretFriend = getMultipleRandom(available);
-      console.log(secretFriend[0].name);
-      gifts.push({
-        name: group[index].name,
-        secretFriend: secretFriend[0].name,
-      });
+      gifts = {
+        ...gifts,
+        [group[index].id]: {
+          name: group[index].name,
+          secretFriend: secretFriend[0].name,
+        },
+      };
       asignedUsers.push(secretFriend[0].name);
     }
-    console.log(gifts);
+    writeSecretFriend(gifts);
     setShowUrls(true);
+  };
+
+  const handleCopy = (id) => {
+    const Text = `Hello, open this link to see who is your secret friend\n\nhttp://127.0.0.1:5173/friend/${id}`;
+    navigator.clipboard.writeText(Text);
+    setClipboard(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setClipboard(false);
   };
 
   const getMultipleRandom = (arr) => {
@@ -68,11 +92,11 @@ const App = () => {
   };
 
   return (
-    <Box>
+    <Box className="App">
       <Box>
         {group.map((data, index) => {
           return (
-            <Box key={index}>
+            <Box key={index} className="Dialog">
               <TextField
                 id="outlined-basic"
                 label="Name"
@@ -90,7 +114,10 @@ const App = () => {
                 onChange={(e) => handleGroup(e.target.value, index)}
               />
               {showUrls ? (
-                <IconButton aria-label="copy">
+                <IconButton
+                  aria-label="copy"
+                  onClick={() => handleCopy(group[index].id)}
+                >
                   <AssignmentIcon />
                 </IconButton>
               ) : (
@@ -102,12 +129,24 @@ const App = () => {
           );
         })}
       </Box>
-      <Button variant="contained" color="primary" onClick={handleAdd}>
-        Agregar
-      </Button>
-      <Button variant="contained" color="primary" onClick={createUrls}>
-        Generar enlaces
-      </Button>
+      <Box>
+        <Button variant="contained" color="primary" onClick={handleAdd}>
+          Agregar
+        </Button>
+        <Button variant="contained" color="primary" onClick={createUrls}>
+          Generar enlaces
+        </Button>
+      </Box>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={clipboard}
+        autoHideDuration={1000}
+        onClose={handleClose}
+        message="Copied"
+      />
     </Box>
   );
 };
