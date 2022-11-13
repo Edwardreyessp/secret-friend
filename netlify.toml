@@ -3,3 +3,12 @@
   from = '/friend/*'
   status = 200
   to = '/.netlify/friend/:id'
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[dev]
+  autoLaunch = false
+  functionsPort = 8885
