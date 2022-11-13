@@ -1,0 +1,5 @@
+[[redirects]]
+  force = true
+  from = '/friend/*'
+  status = 200
+  to = '/.netlify/friend/:id'
