@@ -31,8 +31,8 @@ const SecretFriend = () => {
 
   return (
     <Box className="Text">
-      <Typography>Hello {data.name}</Typography>
-      <Typography>Your secret friend is: {data.secretFriend}</Typography>
+      <Typography>Hola {data.name}</Typography>
+      <Typography>Tu amigo secreto es: {data.secretFriend}</Typography>
     </Box>
   );
 };
