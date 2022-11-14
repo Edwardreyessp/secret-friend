@@ -9,6 +9,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { useState } from "react";
 import "./App.scss";
 import { writeSecretFriend } from "./firebase/config";
+import nextId from "react-id-generator";
 
 const App = () => {
   const [group, setGroup] = useState([{ name: "", group: "", id: "" }]);
@@ -17,13 +18,14 @@ const App = () => {
   const [clipboard, setClipboard] = useState(false);
 
   const handleName = (name, index) => {
+    const id = nextId();
     setGroup(
       [...group].map((object, i) => {
         if (i === index) {
           return {
             ...object,
             name: name,
-            id: `id${indexName}`,
+            id: `${id}`,
           };
         } else return object;
       })
@@ -135,7 +137,12 @@ const App = () => {
         <Button variant="contained" color="primary" onClick={handleAdd}>
           Agregar
         </Button>
-        <Button variant="contained" color="primary" onClick={createUrls}>
+        <Button
+          variant="contained"
+          disabled
+          color="primary"
+          onClick={createUrls}
+        >
           Generar enlaces
         </Button>
       </Box>
