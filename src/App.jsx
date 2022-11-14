@@ -93,7 +93,7 @@ const App = () => {
 
   return (
     <Box className="App">
-      <Box>
+      <Box className="Dialog">
         {group.map((data, index) => {
           return (
             <Box key={index} className="Dialog">
@@ -113,18 +113,20 @@ const App = () => {
                 value={group[index].group}
                 onChange={(e) => handleGroup(e.target.value, index)}
               />
-              {showUrls ? (
-                <IconButton
-                  aria-label="copy"
-                  onClick={() => handleCopy(group[index].id)}
-                >
-                  <AssignmentIcon />
-                </IconButton>
-              ) : (
-                <IconButton aria-label="copy" disabled>
-                  <AssignmentIcon />
-                </IconButton>
-              )}
+              <Box className="icon">
+                {showUrls ? (
+                  <IconButton
+                    aria-label="copy"
+                    onClick={() => handleCopy(group[index].id)}
+                  >
+                    <AssignmentIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="copy" disabled>
+                    <AssignmentIcon />
+                  </IconButton>
+                )}
+              </Box>
             </Box>
           );
         })}

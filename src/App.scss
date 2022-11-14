@@ -4,6 +4,7 @@
   align-items: center;
   height: 100vh;
   flex-direction: column;
+  padding: 5px;
 
   Button {
     margin-right: 20px;
@@ -11,7 +12,15 @@
 
   .Dialog {
     display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
+    width: 90%;
+
+    .icon {
+      width: 30px;
+      margin-left: -15px;
+    }
   }
 }
