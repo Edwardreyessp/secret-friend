@@ -93,7 +93,7 @@ const App = () => {
 
   return (
     <Box className="App">
-      <Box className="Dialog">
+      <Box className="Dialog1">
         {group.map((data, index) => {
           return (
             <Box key={index} className="Dialog">

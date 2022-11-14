@@ -10,6 +10,13 @@
     margin-right: 20px;
   }
 
+  .Dialog1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .Dialog {
     display: flex;
     align-items: center;
